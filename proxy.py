@@ -23,13 +23,10 @@ async def handle_client(client_socket):
 
             async def forward(reader,writer):
                 while True:
-                    try:
                         data=await loop.sock_recv(reader,4096)
                         if not data:
                             break
                         await loop.sock_sendall(writer,data)
-                    except:
-                        break
             await asyncio.gather(
                 forward(client_socket,remote),
                 forward(remote,client_socket)
